@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiFlow – Global Integrated Supply Chain Platform</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Map Dots */
+        .map-dot {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .map-dot:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.8);
+            z-index: 20;
+        }
+        .map-dot.active {
+            background-color: #ef4444; /* Red-500 */
+            border-color: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Chips & Pills */
+        .tag-pill {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            font-weight: 700;
+        }
+
+        /* Active States with Colors */
+        .problem-chip-active {
+            border-color: #3b82f6; /* Blue-500 */
+            background: linear-gradient(to right, #eff6ff, white);
+            box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .initiative-card-active {
+            border-color: #3b82f6;
+            background: linear-gradient(to bottom right, #eff6ff, white);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -15px rgba(37,99,235,0.3);
+        }
+
+        /* Chain steps */
+        .chain-step-active {
+            border-color: #0ea5e9; /* Sky-500 */
+            background: linear-gradient(to right, #f0f9ff, white);
+            box-shadow: 0 10px 25px -10px rgba(14, 165, 233, 0.3);
+            transform: translateX(6px);
+        }
+
+        /* GISC dots */
+        .gisc-dot {
+            transition: all 0.3s ease;
+        }
+        .gisc-dot:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(56,189,248,0.7);
+            z-index: 20;
+        }
+        .gisc-dot-active {
+            background-color: #10b981; /* Emerald-500 */
+            border-color: #ecfdf5;
+            transform: scale(1.3);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Sidebar Nav Active */
+        .nav-btn.active {
+            background: linear-gradient(90deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
+            border-left: 3px solid #3b82f6;
+            color: #60a5fa;
+        }
+
+        .modal-enter {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-enter.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen overflow-hidden flex">
+
+    <aside class="w-20 lg:w-64 bg-slate-900 text-white flex flex-col justify-between shadow-2xl z-30 transition-all duration-300">
+        <div>
+            <div class="h-20 flex items-center justify-center border-b border-slate-800 bg-slate-950">
+                <div class="p-2 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg shadow-lg">
+                    <i data-lucide="package-search" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="ml-3 font-bold text-xl hidden lg:block tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300">LOGIFLOW</span>
+            </div>
+
+            <nav class="mt-8 flex flex-col gap-2 px-0 text-sm">
+                <button onclick="navigate('intro')" id="nav-intro" class="nav-btn active flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">Company</span>
+                </button>
+                <button onclick="navigate('context')" id="nav-context" class="nav-btn flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="globe" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">Network</span>
+                </button>
+                <button onclick="navigate('problem')" id="nav-problem" class="nav-btn flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">Pain Points</span>
+                </button>
+                <button onclick="navigate('initiatives')" id="nav-initiatives" class="nav-btn flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="list-checks" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">3 Initiatives</span>
+                </button>
+                <button onclick="navigate('supply-chain')" id="nav-supply-chain" class="nav-btn flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="workflow" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">Chain</span>
+                </button>
+                <button onclick="navigate('initiative')" id="nav-initiative" class="nav-btn flex items-center p-3 pl-6 hover:bg-slate-800 transition-all text-slate-400">
+                    <i data-lucide="rocket" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">GISC</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 hidden lg:block bg-slate-900">
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-800 cursor-pointer transition">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-xs font-bold text-white">SC</div>
+                <div>
+                    <p class="text-sm font-semibold">SCM Team</p>
+                    <p class="text-xs text-slate-400">LogiFlow Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto no-scrollbar relative bg-slate-50 flex flex-col">
+
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-8 py-4 flex justify-between items-center border-b border-slate-200">
+            <div>
+                <h1 id="page-title" class="text-2xl font-bold text-slate-900">Global Integrated Supply Chain</h1>
+                <p id="page-subtitle" class="text-sm text-slate-500">From pain points to one integrated platform</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="toggleNotification()" class="p-2 rounded-full bg-white border border-slate-200 hover:bg-slate-50 relative transition shadow-sm">
+                    <i data-lucide="bell" class="w-5 h-5 text-slate-600"></i>
+                    <span class="absolute top-1 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse ring-2 ring-white"></span>
+                </button>
+                <button onclick="downloadReport()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-medium transition shadow-lg flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i><span>Export</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full flex-1">
+
+            <section id="intro" class="section-content block fade-in">
+                <div class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-200 transition group">
+                        <div class="flex justify-between items-start">
+                            <p class="tag-pill text-slate-500 group-hover:text-blue-500 transition-colors">Revenue</p>
+                            <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-800 mt-2">89.4 M$</h3>
+                        <p class="text-xs text-slate-400 mt-1">Target: 140.3 M$</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-200 transition group">
+                         <div class="flex justify-between items-start">
+                            <p class="tag-pill text-slate-500 group-hover:text-indigo-500 transition-colors">Network</p>
+                            <i data-lucide="globe-2" class="w-4 h-4 text-indigo-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-800 mt-2">13</h3>
+                        <p class="text-xs text-slate-400 mt-1">Countries served</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-amber-200 transition group">
+                         <div class="flex justify-between items-start">
+                            <p class="tag-pill text-slate-500 group-hover:text-amber-500 transition-colors">Inventory</p>
+                            <i data-lucide="package-x" class="w-4 h-4 text-amber-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-800 mt-2">17.5 M$</h3>
+                        <p class="text-xs text-slate-400 mt-1">High working capital</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-5 rounded-xl shadow-lg shadow-blue-500/30 text-white flex flex-col justify-between cursor-pointer hover:scale-[1.02] transition" onclick="navigate('context')">
+                        <div>
+                            <p class="tag-pill text-blue-200 mb-1">Start</p>
+                            <h3 class="text-2xl font-bold mt-1">Explore Network</h3>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium mt-4">
+                            Interactive Map <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-xl h-[380px] group border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=2100&q=80" alt="Frozen warehouse" class="absolute w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent flex items-end p-8">
+                        <div class="max-w-xl text-white">
+                            <span class="bg-blue-600 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block shadow-lg">Frozen-food distributor</span>
+                            <h2 class="text-3xl font-bold mb-3 drop-shadow-md">Fast growth. Complex cold-chain.</h2>
+                            <p class="text-slate-200 text-sm mb-5 leading-relaxed font-light">
+                                Our network is expanding, but our planning is still manual. We need to bridge the gap between demand and supply.
+                            </p>
+                            <button onclick="navigate('context')" class="bg-white text-slate-900 hover:bg-slate-50 px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition text-sm shadow-lg">
+                                Go to network <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="context" class="section-content hidden fade-in">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[550px]">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                        <h2 class="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2">
+                            <i data-lucide="map" class="text-blue-600"></i> Operating footprint
+                        </h2>
+                        <p class="text-sm text-slate-500 mb-4">
+                            Click a region on the map to see the current status.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
+                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                                <p class="font-semibold text-slate-700">Suppliers</p>
+                                <p class="text-slate-500 mt-1">200+ in 24 countries</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                                <p class="font-semibold text-slate-700">Warehouses</p>
+                                <p class="text-slate-500 mt-1">9 cold warehouses</p>
+                            </div>
+                        </div>
+
+                        <div id="map-info-panel" class="flex-1 bg-slate-50 rounded-xl p-6 border border-slate-200 transition-all">
+                            <div class="text-center h-full flex flex-col justify-center items-center text-slate-400">
+                                <i data-lucide="mouse-pointer-click" class="w-10 h-10 mb-3 opacity-60"></i>
+                                <p class="text-sm">Click a blue dot to open a short card.</p>
+                            </div>
+                        </div>
+
+                        <button onclick="navigate('problem')" class="mt-4 text-xs font-semibold text-blue-600 flex items-center gap-1 hover:underline">
+                            Next · Pain points <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-slate-900 rounded-2xl relative shadow-2xl overflow-hidden border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80"
+                             class="w-full h-full object-cover opacity-50 grayscale contrast-125" alt="World Map">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/80"></div>
+
+                        <button onclick="showMapInfo('usa', this)" class="map-dot absolute top-[35%] left-[24%] w-5 h-5 bg-blue-500 rounded-full border-2 border-white cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)] group">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs px-2 py-1 rounded border border-slate-700 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                                North America Hub
+                            </span>
+                            <span class="absolute top-0 left-0 w-full h-full bg-blue-400 rounded-full animate-ping opacity-70"></span>
+                        </button>
+
+                        <button onclick="showMapInfo('eu', this)" class="map-dot absolute top-[30%] left-[53%] w-5 h-5 bg-blue-500 rounded-full border-2 border-white cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)] group">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs px-2 py-1 rounded border border-slate-700 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                                EU Headquarters
+                            </span>
+                        </button>
+
+                        <button onclick="showMapInfo('latam', this)" class="map-dot absolute top-[55%] left-[32%] w-5 h-5 bg-blue-500 rounded-full border-2 border-white cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)] group">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs px-2 py-1 rounded border border-slate-700 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                                Mexico & Caribbean
+                            </span>
+                        </button>
+
+                        <button onclick="showMapInfo('asia', this)" class="map-dot absolute top-[42%] left-[78%] w-5 h-5 bg-blue-500 rounded-full border-2 border-white cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)] group">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs px-2 py-1 rounded border border-slate-700 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                                Main Sourcing
+                            </span>
+                            <span class="absolute top-0 left-0 w-full h-full bg-blue-400 rounded-full animate-ping opacity-70"></span>
+                        </button>
+
+                        <div class="absolute bottom-6 left-6 bg-slate-900/80 backdrop-blur-md text-white p-4 rounded-xl text-xs max-w-xs border border-slate-700 shadow-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
+                                <p class="font-bold">Key Insight</p>
+                            </div>
+                            <p class="opacity-80 leading-relaxed">Long, complex and cold-chain sensitive flows. Perfect playground for better planning and visibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem" class="section-content hidden fade-in">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="tag-pill text-red-500 font-bold bg-red-50 px-2 py-1 rounded-full border border-red-100">Step 1 · Pain points</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-3">Six core problems in one view</h2>
+                    <p class="text-slate-500 mt-3 text-sm">
+                        Tap a tile to reveal the process.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <button id="chip-demand" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-red-300 hover:shadow-md transition"
+                            onclick="selectProblem('demand')">
+                        <div class="p-2.5 rounded-lg bg-red-50 text-red-500 h-fit border border-red-100">
+                            <i data-lucide="line-chart" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">01</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">Demand planning</h3>
+                            <p class="text-[11px] text-slate-500">Reactive, short-term decisions.</p>
+                        </div>
+                    </button>
+
+                    <button id="chip-inventory" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-amber-300 hover:shadow-md transition"
+                            onclick="selectProblem('inventory')">
+                        <div class="p-2.5 rounded-lg bg-amber-50 text-amber-500 h-fit border border-amber-100">
+                            <i data-lucide="boxes" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">02</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">Inventory</h3>
+                            <p class="text-[11px] text-slate-500">Too much stock in the wrong SKUs.</p>
+                        </div>
+                    </button>
+
+                    <button id="chip-visibility" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-md transition"
+                            onclick="selectProblem('visibility')">
+                        <div class="p-2.5 rounded-lg bg-indigo-50 text-indigo-500 h-fit border border-indigo-100">
+                            <i data-lucide="radar" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">03</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">End-to-end visibility</h3>
+                            <p class="text-[11px] text-slate-500">No live view of containers.</p>
+                        </div>
+                    </button>
+
+                    <button id="chip-manual" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-orange-300 hover:shadow-md transition"
+                            onclick="selectProblem('manual')">
+                        <div class="p-2.5 rounded-lg bg-orange-50 text-orange-500 h-fit border border-orange-100">
+                            <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">04</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">Manual work</h3>
+                            <p class="text-[11px] text-slate-500">Spreadsheet- and email-driven.</p>
+                        </div>
+                    </button>
+
+                    <button id="chip-data" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-md transition"
+                            onclick="selectProblem('data')">
+                        <div class="p-2.5 rounded-lg bg-cyan-50 text-cyan-500 h-fit border border-cyan-100">
+                            <i data-lucide="database" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">05</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">Data</h3>
+                            <p class="text-[11px] text-slate-500">Different numbers in each system.</p>
+                        </div>
+                    </button>
+
+                    <button id="chip-warehouse" class="problem-chip bg-white rounded-xl border border-slate-200 p-4 text-left flex gap-3 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-md transition"
+                            onclick="selectProblem('warehouse')">
+                        <div class="p-2.5 rounded-lg bg-emerald-50 text-emerald-500 h-fit border border-emerald-100">
+                            <i data-lucide="warehouse" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-slate-400 mb-1">06</p>
+                            <h3 class="font-semibold text-slate-900 text-sm mb-1">Warehouse</h3>
+                            <p class="text-[11px] text-slate-500">Complex operations and returns.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div id="problem-detail" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+                    <div class="md:col-span-2 relative h-52 rounded-xl overflow-hidden shadow-inner bg-slate-100">
+                        <img id="problem-image" src="https://images.unsplash.com/photo-1543286386-2f6595e9649b?auto=format&fit=crop&w=900&q=80"
+                             class="w-full h-full object-cover transition-all duration-500" alt="Problem visual">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white text-xs">
+                            <p class="tag-pill text-slate-300 mb-1" id="problem-tag">Choose a pain point</p>
+                            <p class="font-bold text-lg" id="problem-title">The flow will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-3 grid grid-cols-3 gap-4 text-xs">
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col justify-between h-full hover:border-red-200 transition">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-white text-red-500 flex items-center justify-center border border-red-100">
+                                    <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <p class="tag-pill text-slate-400">Before</p>
+                            </div>
+                            <p id="before-text" class="text-slate-600 font-medium leading-relaxed">
+                                Click one tile above to see the path.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50/50 rounded-xl p-4 border border-blue-100 flex flex-col justify-between h-full hover:border-blue-200 transition">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-white text-blue-600 flex items-center justify-center border border-blue-100">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <p class="tag-pill text-blue-600">Action</p>
+                            </div>
+                            <p id="action-text" class="text-blue-900 font-medium leading-relaxed">
+                                Linking pain to our initiatives.
+                            </p>
+                        </div>
+                        <div class="bg-emerald-50/50 rounded-xl p-4 border border-emerald-100 flex flex-col justify-between h-full hover:border-emerald-200 transition">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-white text-emerald-600 flex items-center justify-center border border-emerald-100">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <p class="tag-pill text-emerald-600">After</p>
+                            </div>
+                            <p id="after-text" class="text-emerald-900 font-medium leading-relaxed">
+                                Visual result description.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="navigate('initiatives')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center gap-2 mx-auto text-sm">
+                        Next · 3 initiatives <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="initiatives" class="section-content hidden fade-in">
+                <div class="mb-8">
+                    <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 2 · First ideas</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-3">Three initiatives, one future platform</h2>
+                    <p class="text-sm text-slate-600 mt-2 max-w-xl">
+                        Select an initiative below.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                    <div class="space-y-4">
+                        <button id="init-ai" class="initiative-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left transition group"
+                                onclick="selectInitiative('ai')">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-3 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="tag-pill text-slate-400 mb-1 group-hover:text-blue-500">Initiative 1</p>
+                                        <h3 class="font-bold text-slate-900 text-lg">AI Demand & Inventory</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed pl-[3.5rem]">
+                                Machine learning forecast + safety stock rules instead of “gut feeling”.
+                            </p>
+                        </button>
+
+                        <button id="init-sku" class="initiative-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left transition group"
+                                onclick="selectInitiative('sku')">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-3 rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="grid-3x3" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="tag-pill text-slate-400 mb-1 group-hover:text-emerald-500">Initiative 2</p>
+                                        <h3 class="font-bold text-slate-900 text-lg">SKU Optimization</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed pl-[3.5rem]">
+                                ABC-XYZ matrix to keep the winners and simplify the tail.
+                            </p>
+                        </button>
+
+                        <button id="init-iot" class="initiative-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left transition group"
+                                onclick="selectInitiative('iot')">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-3 rounded-xl bg-cyan-50 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="satellite-dish" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="tag-pill text-slate-400 mb-1 group-hover:text-cyan-500">Initiative 3</p>
+                                        <h3 class="font-bold text-slate-900 text-lg">IoT Cold-Chain</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed pl-[3.5rem]">
+                                Sensors for temperature and GPS, feeding simple live dashboards.
+                            </p>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-center">
+                        <div class="bg-slate-900 rounded-[2.5rem] p-4 w-72 h-[450px] relative shadow-2xl border-4 border-slate-800">
+                            <div class="absolute inset-x-16 -top-1 h-6 bg-slate-800 rounded-b-3xl z-20"></div>
+                            <div class="bg-black rounded-[2rem] w-full h-full overflow-hidden relative">
+                                <img id="initiative-image"
+                                     src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80"
+                                     class="w-full h-full object-cover opacity-80" alt="Initiative preview">
+                                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
+
+                                <div class="absolute top-6 left-4 right-4 flex justify-between items-center text-[10px] text-slate-100 z-10">
+                                    <span id="initiative-chip-top" class="px-2 py-1 bg-white/20 backdrop-blur rounded-full border border-white/20 font-medium">
+                                        AI Planner
+                                    </span>
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-300 rounded-full border border-green-500/30 flex items-center gap-1 animate-pulse">
+                                        <i data-lucide="wifi" class="w-3 h-3"></i> Live
+                                    </span>
+                                </div>
+
+                                <div class="absolute bottom-6 left-5 right-5 text-white z-10">
+                                    <p id="initiative-title" class="font-bold text-lg mb-3 leading-tight">AI forecast per product and country</p>
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span id="initiative-tag1" class="px-2.5 py-1 bg-white/20 rounded-md text-[10px] backdrop-blur font-medium">Less stock-outs</span>
+                                        <span id="initiative-tag2" class="px-2.5 py-1 bg-white/20 rounded-md text-[10px] backdrop-blur font-medium">Lower inventory</span>
+                                        <span id="initiative-tag3" class="px-2.5 py-1 bg-white/20 rounded-md text-[10px] backdrop-blur font-medium">One common plan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="navigate('supply-chain')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center gap-2 mx-auto text-sm">
+                        Next · Chain impact <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="supply-chain" class="section-content hidden fade-in">
+                <div class="mb-6">
+                    <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 3 · Chain view</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-3">One simple journey</h2>
+                    <p class="text-sm text-slate-600 mt-2 max-w-xl">
+                        Click on each step of the chain to see the transformation.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5 relative overflow-hidden">
+                        <div class="absolute left-7 top-10 bottom-10 w-[2px] bg-gradient-to-b from-slate-200 via-blue-200 to-slate-200"></div>
+
+                        <div class="space-y-5 mt-2">
+                            <button class="chain-step flex items-center gap-4 relative w-full px-3 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white transition group"
+                                    onclick="selectChainStep('suppliers', this)">
+                                <div class="absolute -left-[19px] w-6 h-6 rounded-full border-4 border-slate-50 bg-slate-300 group-hover:bg-blue-500 transition-colors z-10"></div>
+                                <div class="w-10 h-10 rounded-lg bg-slate-200 text-slate-500 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                    <i data-lucide="factory" class="w-5 h-5"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-slate-800">Suppliers</p>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wide">Step 01</p>
+                                </div>
+                            </button>
+
+                            <button class="chain-step flex items-center gap-4 relative w-full px-3 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white transition group"
+                                    onclick="selectChainStep('ocean', this)">
+                                <div class="absolute -left-[19px] w-6 h-6 rounded-full border-4 border-slate-50 bg-slate-300 group-hover:bg-blue-500 transition-colors z-10"></div>
+                                <div class="w-10 h-10 rounded-lg bg-slate-200 text-slate-500 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                    <i data-lucide="ship" class="w-5 h-5"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-slate-800">Ocean freight</p>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wide">Step 02</p>
+                                </div>
+                            </button>
+
+                            <button class="chain-step flex items-center gap-4 relative w-full px-3 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white transition group"
+                                    onclick="selectChainStep('warehouse', this)">
+                                <div class="absolute -left-[19px] w-6 h-6 rounded-full border-4 border-slate-50 bg-slate-300 group-hover:bg-blue-500 transition-colors z-10"></div>
+                                <div class="w-10 h-10 rounded-lg bg-slate-200 text-slate-500 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                    <i data-lucide="warehouse" class="w-5 h-5"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-slate-800">Warehouses</p>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wide">Step 03</p>
+                                </div>
+                            </button>
+
+                            <button class="chain-step flex items-center gap-4 relative w-full px-3 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white transition group"
+                                    onclick="selectChainStep('customers', this)">
+                                <div class="absolute -left-[19px] w-6 h-6 rounded-full border-4 border-slate-50 bg-slate-300 group-hover:bg-blue-500 transition-colors z-10"></div>
+                                <div class="w-10 h-10 rounded-lg bg-slate-200 text-slate-500 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                    <i data-lucide="truck" class="w-5 h-5"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-slate-800">Customers</p>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wide">Step 04</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+                        <div class="relative rounded-2xl overflow-hidden h-56 md:h-full shadow-inner">
+                            <img id="chain-image"
+                                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
+                                 class="w-full h-full object-cover" alt="Chain step">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
+                            <div class="absolute bottom-5 left-5 text-white z-10">
+                                <p id="chain-step-label" class="tag-pill text-blue-300 mb-1">Step 1 · Suppliers</p>
+                                <p id="chain-title" class="font-bold text-xl">Suppliers & sourcing</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3 text-xs">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="repeat" class="w-4 h-4 text-slate-400"></i>
+                                    <p class="tag-pill text-slate-500">Flow today</p>
+                                </div>
+                                <p id="chain-flow" class="text-slate-700 leading-relaxed">
+                                    Purchase orders sent in a reactive way, based on short-term view.
+                                </p>
+                            </div>
+
+                            <div class="bg-rose-50 rounded-xl p-4 border border-rose-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="triangle-alert" class="w-4 h-4 text-rose-500"></i>
+                                    <p class="tag-pill text-rose-600">Pain</p>
+                                </div>
+                                <p id="chain-pain" class="text-rose-900 font-medium leading-relaxed">
+                                    Suppliers receive late and fragmented signals; capacity and prices suffer.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <span id="chain-chip1" class="px-2 py-1 rounded bg-white text-rose-700 border border-rose-100 text-[10px] font-semibold">Demand planning</span>
+                                    <span id="chain-chip2" class="px-2 py-1 rounded bg-white text-rose-700 border border-rose-100 text-[10px] font-semibold">Manual work</span>
+                                    <span id="chain-chip3" class="px-2 py-1 rounded bg-white text-rose-700 border border-rose-100 text-[10px] font-semibold hidden">Data</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+                                    <p class="tag-pill text-emerald-600">With GISC</p>
+                                </div>
+                                <p id="chain-fix" class="text-emerald-900 font-medium leading-relaxed">
+                                    GISC shares one AI-based plan with suppliers, stabilising volumes and improving prices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="navigate('initiative')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center gap-2 mx-auto text-sm">
+                        Final · GISC platform <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="initiative" class="section-content hidden fade-in">
+                <div class="mb-6">
+                    <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 4 · Final solution</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-3">GISC – one control tower</h2>
+                    <p class="text-sm text-slate-600 mt-2 max-w-xl">
+                        Interact with the dashboard below.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-8">
+                    <div class="lg:col-span-2 bg-slate-900 rounded-2xl p-6 relative overflow-hidden border border-slate-800 shadow-2xl">
+                        <img id="gisc-image"
+                             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+                             class="w-full h-full object-cover absolute inset-0 opacity-40 mix-blend-luminosity" alt="GISC dashboard">
+                        <div class="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/50 to-slate-900/90"></div>
+
+                        <div class="relative z-10 flex items-center justify-between mb-4 text-xs text-slate-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-base text-white">GISC Control Tower</p>
+                                    <p class="text-slate-400 text-[11px]">Integrated Planning & Execution</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 flex items-center gap-2 backdrop-blur-sm">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> Live KPIs
+                            </span>
+                        </div>
+
+                        <div class="relative z-10 h-64 mt-6">
+                            <button class="gisc-dot gisc-dot-active absolute top-6 left-16 w-12 h-12 rounded-full border-4 border-cyan-300 bg-cyan-600 flex items-center justify-center cursor-pointer shadow-[0_0_30px_rgba(8,145,178,0.6)]"
+                                    onclick="selectGiscPillar('planning', this)">
+                                <i data-lucide="line-chart" class="w-5 h-5 text-white"></i>
+                            </button>
+                            <span class="absolute top-8 left-32 text-xs font-bold text-white tracking-wide">PLANNING</span>
+
+                            <button class="gisc-dot absolute top-1/2 right-16 w-12 h-12 rounded-full border-4 border-amber-300 bg-amber-500 flex items-center justify-center cursor-pointer shadow-[0_0_30px_rgba(245,158,11,0.6)]"
+                                    onclick="selectGiscPillar('inventory', this)">
+                                <i data-lucide="boxes" class="w-5 h-5 text-white"></i>
+                            </button>
+                            <span class="absolute top-1/2 right-32 -translate-y-1/2 text-xs font-bold text-white tracking-wide">INVENTORY</span>
+
+                            <button class="gisc-dot absolute bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-4 border-indigo-300 bg-indigo-600 flex items-center justify-center cursor-pointer shadow-[0_0_30px_rgba(79,70,229,0.6)]"
+                                    onclick="selectGiscPillar('visibility', this)">
+                                <i data-lucide="radar" class="w-5 h-5 text-white"></i>
+                            </button>
+                            <span class="absolute bottom-0 left-1/2 translate-y-2 -translate-x-1/2 text-xs font-bold text-white tracking-wide">VISIBILITY</span>
+
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="w-48 h-48 rounded-full border border-white/10 border-dashed animate-[spin_10s_linear_infinite]"></div>
+                                <div class="w-80 h-80 rounded-full border border-white/5"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col shadow-lg">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <i id="gisc-detail-icon" data-lucide="line-chart" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="tag-pill text-blue-500 mb-1" id="gisc-detail-pill">AI Planning</p>
+                                <h3 class="font-bold text-slate-900 text-lg leading-tight" id="gisc-detail-title">
+                                    Clean forecast
+                                </h3>
+                            </div>
+                        </div>
+
+                        <p id="gisc-detail-desc" class="text-sm text-slate-600 mb-6 leading-relaxed">
+                            GISC uses AI to merge historicals, promotions and seasonality and sends one aligned plan across the company.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-6 text-[10px] uppercase font-bold tracking-wide">
+                            <span id="gisc-detail-chip1" class="px-3 py-1.5 rounded bg-slate-100 text-slate-600">Less firefighting</span>
+                            <span id="gisc-detail-chip2" class="px-3 py-1.5 rounded bg-slate-100 text-slate-600">Earlier orders</span>
+                            <span id="gisc-detail-chip3" class="px-3 py-1.5 rounded bg-slate-100 text-slate-600">One common plan</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3 text-xs mt-auto">
+                            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center">
+                                <p class="tag-pill text-slate-400 mb-1">Forecast error</p>
+                                <p id="gisc-kpi1" class="text-lg font-bold text-slate-900">≤ 15%</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center">
+                                <p class="tag-pill text-slate-400 mb-1">Inventory</p>
+                                <p id="gisc-kpi2" class="text-lg font-bold text-slate-900">-20%</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center">
+                                <p class="tag-pill text-slate-400 mb-1">Service</p>
+                                <p id="gisc-kpi3" class="text-lg font-bold text-slate-900">98%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-xs">
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+                        <p class="tag-pill text-slate-400 mb-2">Demand planning</p>
+                        <p class="text-3xl font-bold text-blue-600">1 plan</p>
+                        <p class="text-slate-500 mt-2 font-medium">AI-driven & shared</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+                        <p class="tag-pill text-slate-400 mb-2">Inventory</p>
+                        <p class="text-3xl font-bold text-amber-500">Smarter</p>
+                        <p class="text-slate-500 mt-2 font-medium">ABC–XYZ rules</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+                        <p class="tag-pill text-slate-400 mb-2">Visibility</p>
+                        <p class="text-3xl font-bold text-indigo-500">Live</p>
+                        <p class="text-slate-500 mt-2 font-medium">IoT cold-chain</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+                        <p class="tag-pill text-slate-400 mb-2">Data</p>
+                        <p class="text-3xl font-bold text-emerald-500">One truth</p>
+                        <p class="text-slate-500 mt-2 font-medium">Single data model</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between text-white shadow-2xl">
+                    <div class="flex items-center gap-5 mb-4 md:mb-0">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg ring-4 ring-white/10">
+                            <i data-lucide="check-circle" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="tag-pill text-blue-300 mb-1">End of journey</p>
+                            <h3 class="text-2xl font-bold tracking-wide">LOGIFLOW is ready.</h3>
+                            <p class="text-sm text-slate-400">From manual pain to an integrated platform.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="notification-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 modal-enter backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full mx-4 border border-slate-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg text-slate-800">Presentation hint</h3>
+                <button onclick="toggleNotification()" class="text-slate-400 hover:text-slate-600 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                Use the sidebar to navigate the story: <strong>Company → Network → Pain points → Initiatives → Chain → GISC</strong>. 
+                <br><br>
+                Interact with the tiles and dots to reveal details.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const pageConfig = {
+            "intro": {
+                title: "Global Integrated Supply Chain – Storyline",
+                subtitle: "From pain points to one integrated platform"
+            },
+            "context": {
+                title: "Operating Footprint & Global Network",
+                subtitle: "13 countries · 2,700 customers · 200+ suppliers"
+            },
+            "problem": {
+                title: "Key Pain Points in the Supply Chain",
+                subtitle: "Six core issues that block growth"
+            },
+            "initiatives": {
+                title: "Three Initial Initiatives",
+                subtitle: "AI planning, SKU optimization and IoT visibility"
+            },
+            "supply-chain": {
+                title: "End-to-End Supply Chain Impact",
+                subtitle: "One journey from supplier to customer"
+            },
+            "initiative": {
+                title: "Global Integrated Supply Chain Platform (GISC)",
+                subtitle: "One app-like control tower for planning, inventory and visibility"
+            }
+        };
+
+        function navigate(sectionId) {
+            document.querySelectorAll('.section-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('fade-in');
+            });
+            const target = document.getElementById(sectionId);
+            target.classList.remove('hidden');
+            void target.offsetWidth;
+            target.classList.add('fade-in');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const nav = document.getElementById('nav-' + sectionId);
+            if (nav) {
+                nav.classList.add('active');
+            }
+
+            if (pageConfig[sectionId]) {
+                document.getElementById('page-title').innerText = pageConfig[sectionId].title;
+                document.getElementById('page-subtitle').innerText = pageConfig[sectionId].subtitle;
+            }
+        }
+
+        // MAP INFO
+        const mapData = {
+            "usa": {
+                title: "North America hub",
+                kpi: "High service expectations, limited live visibility.",
+                desc: "Many foodservice and retail clients. Today they do not always see reliable estimated delivery times.",
+                status: "warning"
+            },
+            "eu": {
+                title: "European HQ & distribution centers",
+                kpi: "Complex multi-warehouse network.",
+                desc: "Inventory is high and not fully aligned with demand. Practices differ by site.",
+                status: "ok"
+            },
+            "latam": {
+                title: "Mexico & Caribbean units",
+                kpi: "High growth, manual processes.",
+                desc: "Perfect pilot region for planning, portfolio and visibility improvements.",
+                status: "warning"
+            },
+            "asia": {
+                title: "Main sourcing region (Asia)",
+                kpi: "Long lead times up to several months.",
+                desc: "Container bookings are often late; visibility is limited.",
+                status: "alert"
+            }
+        };
+
+        function showMapInfo(region, buttonEl) {
+            const data = mapData[region];
+            const panel = document.getElementById('map-info-panel');
+
+            document.querySelectorAll('.map-dot').forEach(d => d.classList.remove('active'));
+            if (buttonEl) buttonEl.classList.add('active');
+
+            let statusColor, icon;
+            if (data.status === 'alert') {
+                statusColor = 'text-red-500';
+                icon = 'alert-octagon';
+            } else if (data.status === 'warning') {
+                statusColor = 'text-amber-500';
+                icon = 'alert-triangle';
+            } else {
+                statusColor = 'text-emerald-500';
+                icon = 'check-circle-2';
+            }
+
+            panel.innerHTML = `
+                <div class="fade-in">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-bold text-slate-800">${data.title}</h3>
+                        <i data-lucide="${icon}" class="${statusColor} w-6 h-6"></i>
+                    </div>
+                    <div class="p-3 bg-white rounded border border-slate-200 mb-3 shadow-sm">
+                        <p class="text-[11px] font-bold text-slate-500 uppercase">Situation</p>
+                        <p class="text-sm font-semibold ${statusColor}">${data.kpi}</p>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-3">${data.desc}</p>
+                    <button class="mt-1 text-xs text-blue-600 font-semibold flex items-center gap-1 hover:underline" onclick="navigate('problem')">
+                        Go to pain points <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // PAIN POINT VISUALS - UPDATED IMAGES
+        const problemData = {
+            "demand": {
+                tag: "Demand planning",
+                title: "No unified forecast",
+                image: "https://images.unsplash.com/photo-1543286386-2f6595e9649b?auto=format&fit=crop&w=900&q=80",
+                before: "Each unit orders based on experience. Little long-term view.",
+                action: "AI forecasting + one Sales and Operations Planning cycle.",
+                after: "Earlier, aligned orders and less rush shipments."
+            },
+            "inventory": {
+                tag: "Inventory",
+                title: "Too much of the wrong stock",
+                image: "https://images.unsplash.com/photo-1566576912906-253c7235555d?auto=format&fit=crop&w=900&q=80",
+                before: "C-class products with very long coverage and low rotation.",
+                action: "ABC-XYZ matrix decides what to keep, reduce or make on demand.",
+                after: "Lower working capital and simpler warehouse flows."
+            },
+            "visibility": {
+                tag: "End-to-end visibility",
+                title: "Blind spots in containers and cold-chain",
+                image: "https://images.unsplash.com/photo-1516937941348-c09e55412a3d?auto=format&fit=crop&w=900&q=80",
+                before: "Status only by email or phone with forwarders and warehouses.",
+                action: "IoT sensors send temperature and GPS data into dashboards.",
+                after: "Fewer quality incidents and clear proof of cold-chain."
+            },
+            "manual": {
+                tag: "Manual work",
+                title: "Too many emails and spreadsheets",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=80",
+                before: "Planners spend hours copying and reconciling files.",
+                action: "Digital workflows and role-based screens in GISC.",
+                after: "People spend more time on decisions and less on admin."
+            },
+            "data": {
+                tag: "Data",
+                title: "Different numbers everywhere",
+                image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=900&q=80",
+                before: "ERP, warehouse system and Excel do not match.",
+                action: "One master data model and standard key performance indicators.",
+                after: "“One truth” for every discussion and report."
+            },
+            "warehouse": {
+                tag: "Warehouse operations",
+                title: "Complex picking and returns",
+                image: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=900&q=80",
+                before: "Slow movers consume cold space and create handling work.",
+                action: "ABC-XYZ storage logic and better layouts integrated in GISC.",
+                after: "Faster operations and less waste or rework."
+            }
+        };
+
+        function clearProblemChips() {
+            document.querySelectorAll('.problem-chip').forEach(chip => {
+                chip.classList.remove('problem-chip-active');
+            });
+        }
+
+        function selectProblem(key) {
+            const data = problemData[key];
+            clearProblemChips();
+            const chip = document.getElementById('chip-' + key);
+            if (chip) chip.classList.add('problem-chip-active');
+
+            document.getElementById('problem-tag').innerText = data.tag;
+            document.getElementById('problem-title').innerText = data.title;
+            document.getElementById('problem-image').src = data.image;
+
+            document.getElementById('before-text').innerText = data.before;
+            document.getElementById('action-text').innerText = data.action;
+            document.getElementById('after-text').innerText = data.after;
+        }
+
+        // INITIATIVES VISUAL - UPDATED IMAGES
+        const initiativeData = {
+            "ai": {
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80",
+                chip: "Planner view · AI",
+                title: "AI forecast vs. historical sales per region.",
+                tags: ["Less stock-outs", "Earlier ordering", "One common plan"]
+            },
+            "sku": {
+                image: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=900&q=80",
+                chip: "ABC–XYZ matrix",
+                title: "Grid of products by value and variability.",
+                tags: ["Focus on A-X", "Shrink long tail", "Free cold-space"]
+            },
+            "iot": {
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
+                chip: "Cold-chain view",
+                title: "Live temperature and GPS per container.",
+                tags: ["Cold-chain proof", "Fewer returns", "Better ETAs"]
+            }
+        };
+
+        function clearInitiativeCards() {
+            document.querySelectorAll('.initiative-card').forEach(card => {
+                card.classList.remove('initiative-card-active');
+            });
+        }
+
+        function selectInitiative(key) {
+            const d = initiativeData[key];
+            clearInitiativeCards();
+            const card = document.getElementById('init-' + key);
+            if (card) card.classList.add('initiative-card-active');
+
+            document.getElementById('initiative-image').src = d.image;
+            document.getElementById('initiative-chip-top').innerText = d.chip;
+            document.getElementById('initiative-title').innerText = d.title;
+
+            document.getElementById('initiative-tag1').innerText = d.tags[0];
+            document.getElementById('initiative-tag2').innerText = d.tags[1];
+            document.getElementById('initiative-tag3').innerText = d.tags[2];
+        }
+
+        // NEW CHAIN STEPS - FIXED OCEAN IMAGE
+        const chainSteps = {
+            "suppliers": {
+                label: "Step 1 · Suppliers",
+                title: "Suppliers & sourcing",
+                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80",
+                flow: "Purchase orders sent in a reactive way, based on short-term view.",
+                pain: "Suppliers receive late and fragmented signals; capacity and prices suffer.",
+                fix: "GISC shares one AI-based plan with suppliers, stabilising volumes and improving prices.",
+                chips: ["Demand planning", "Manual work", ""]
+            },
+            "ocean": {
+                label: "Step 2 · Ocean freight",
+                title: "Containers on the ocean",
+                // FIXED IMAGE: Aerial container ship
+                image: "https://images.unsplash.com/photo-1524522173746-f628baad3644?auto=format&fit=crop&w=1000&q=80",
+                flow: "Containers travel weeks with limited live tracking.",
+                pain: "Blind spots in route and temperature, hard to react to issues.",
+                fix: "IoT sensors and events send GPS and temperature into GISC dashboards.",
+                chips: ["Visibility", "Data", ""]
+            },
+            "warehouse": {
+                label: "Step 3 · Warehouses",
+                title: "Cold warehouses & stock",
+                image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80",
+                flow: "9 warehouses with a long tail of slow-moving products.",
+                pain: "Cold space and energy used by low-value SKUs.",
+                fix: "ABC–XYZ rules from GISC guide what to stock and where.",
+                chips: ["Inventory", "Warehouse", "Energy"]
+            },
+            "customers": {
+                label: "Step 4 · Customers",
+                title: "Restaurants & retailers",
+                image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=80",
+                flow: "Deliveries to 2,700+ business customers with limited status visibility.",
+                pain: "Customer service handles many status calls and returns.",
+                fix: "GISC offers a simple status and cold-chain proof view per order.",
+                chips: ["Visibility", "Service level", "Returns"]
+            }
+        };
+
+        function clearChainSteps() {
+            document.querySelectorAll('.chain-step').forEach(btn => {
+                btn.classList.remove('chain-step-active');
+            });
+        }
+
+        function selectChainStep(stepKey, buttonEl) {
+            const s = chainSteps[stepKey];
+            clearChainSteps();
+            if (buttonEl) buttonEl.classList.add('chain-step-active');
+
+            document.getElementById('chain-image').src = s.image;
+            document.getElementById('chain-step-label').innerText = s.label;
+            document.getElementById('chain-title').innerText = s.title;
+            document.getElementById('chain-flow').innerText = s.flow;
+            document.getElementById('chain-pain').innerText = s.pain;
+            document.getElementById('chain-fix').innerText = s.fix;
+
+            const chip1 = document.getElementById('chain-chip1');
+            const chip2 = document.getElementById('chain-chip2');
+            const chip3 = document.getElementById('chain-chip3');
+
+            chip1.innerText = s.chips[0];
+            chip2.innerText = s.chips[1];
+            chip3.innerText = s.chips[2];
+
+            chip1.classList.toggle('hidden', !s.chips[0]);
+            chip2.classList.toggle('hidden', !s.chips[1]);
+            chip3.classList.toggle('hidden', !s.chips[2]);
+        }
+
+        // NEW GISC PILLARS - UPDATED IMAGES
+        const giscPillars = {
+            "planning": {
+                pill: "AI Planning",
+                title: "Clean forecast and purchase signal for all regions",
+                desc: "GISC uses AI to merge historicals, promotions and seasonality and sends one aligned plan across the company.",
+                icon: "line-chart",
+                chips: ["Less firefighting", "Earlier orders", "One common plan"],
+                kpi1: "≤ 15%",
+                kpi2: "-20–25%",
+                kpi3: "≥ 95%",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+            },
+            "inventory": {
+                pill: "Smart Inventory",
+                title: "ABC–XYZ rules for what to stock and where",
+                desc: "GISC applies ABC–XYZ logic to decide where to invest cold-space and how to set safety stocks.",
+                icon: "boxes",
+                chips: ["Less excess stock", "Free cold-space", "Simpler operations"],
+                kpi1: "-20–25%",
+                kpi2: "Better rotation",
+                kpi3: "Fewer write-offs",
+                image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80"
+            },
+            "visibility": {
+                pill: "End-to-end visibility",
+                title: "Live view of containers, temperature and orders",
+                desc: "GISC connects IoT sensors and status events so everyone sees the same live picture of the chain.",
+                icon: "radar",
+                chips: ["Cold-chain proof", "Fewer returns", "Fewer status calls"],
+                kpi1: "98% cold-chain",
+                kpi2: "Lower returns",
+                kpi3: "Happier customers",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
+            }
+        };
+
+        function clearGiscDots() {
+            document.querySelectorAll('.gisc-dot').forEach(dot => {
+                dot.classList.remove('gisc-dot-active');
+            });
+        }
+
+        function selectGiscPillar(pillarKey, dotEl) {
+            const p = giscPillars[pillarKey];
+            clearGiscDots();
+            if (dotEl) dotEl.classList.add('gisc-dot-active');
+
+            document.getElementById('gisc-image').src = p.image;
+            document.getElementById('gisc-detail-pill').innerText = p.pill;
+            document.getElementById('gisc-detail-title').innerText = p.title;
+            document.getElementById('gisc-detail-desc').innerText = p.desc;
+
+            document.getElementById('gisc-detail-chip1').innerText = p.chips[0];
+            document.getElementById('gisc-detail-chip2').innerText = p.chips[1];
+            document.getElementById('gisc-detail-chip3').innerText = p.chips[2];
+
+            document.getElementById('gisc-kpi1').innerText = p.kpi1;
+            document.getElementById('gisc-kpi2').innerText = p.kpi2;
+            document.getElementById('gisc-kpi3').innerText = p.kpi3;
+
+            const iconEl = document.getElementById('gisc-detail-icon');
+            if (iconEl) {
+                iconEl.setAttribute('data-lucide', p.icon);
+                iconEl.innerHTML = "";
+                lucide.createIcons();
+            }
+        }
+
+        // Utils
+        function toggleNotification() {
+            const el = document.getElementById('notification-modal');
+            el.classList.toggle('active');
+        }
+
+        function downloadReport() {
+            alert("In a real app this would export the storyline as a PDF or PowerPoint.");
+        }
+
+        // Init defaults
+        selectInitiative('ai');
+
+        // marcar el primer step de cadena por defecto
+        window.addEventListener('load', () => {
+            const firstChainBtn = document.querySelector('.chain-step');
+            if (firstChainBtn) selectChainStep('suppliers', firstChainBtn);
+
+            // pilar por defecto
+            const firstDot = document.querySelector('.gisc-dot');
+            if (firstDot) selectGiscPillar('planning', firstDot);
+        });
+    </script>
+</body>
+</html>
