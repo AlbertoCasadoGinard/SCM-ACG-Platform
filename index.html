@@ -938,55 +938,55 @@
 
         /* UPDATED IMAGES FOR PROBLEM CARDS */
         const problemData = {
-            "demand": {
-                tag: "Demand planning",
-                title: "No unified forecast",
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
-                before: "Each unit orders based on experience. Little long-term view.",
-                action: "AI forecasting + one Sales and Operations Planning cycle.",
-                after: "Earlier, aligned orders and less rush shipments."
-            },
-            "inventory": {
-                tag: "Inventory",
-                title: "Too much of the wrong stock",
-                image: "https://images.unsplash.com/photo-1586521995568-39b00c97d335?auto=format&fit=crop&w=900&q=80",
-                before: "C-class products with very long coverage and low rotation.",
-                action: "ABC-XYZ matrix decides what to keep, reduce or make on demand.",
-                after: "Lower working capital and simpler warehouse flows."
-            },
-            "visibility": {
-                tag: "End-to-end visibility",
-                title: "Blind spots in containers and cold-chain",
-                image: "https://images.unsplash.com/photo-1517898717281-8e4385a4a56b?auto=format&fit=crop&w=900&q=80",
-                before: "Status only by email or phone with forwarders and warehouses.",
-                action: "IoT sensors send temperature and GPS data into dashboards.",
-                after: "Fewer quality incidents and clear proof of cold-chain."
-            },
-            "manual": {
-                tag: "Manual work",
-                title: "Too many emails and spreadsheets",
-                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
-                before: "Planners spend hours copying and reconciling files.",
-                action: "Digital workflows and role-based screens in GISC.",
-                after: "People spend more time on decisions and less on admin."
-            },
-            "data": {
-                tag: "Data",
-                title: "Different numbers everywhere",
-                image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=900&q=80",
-                before: "ERP, warehouse system and Excel do not match.",
-                action: "One master data model and standard key performance indicators.",
-                after: "“One truth” for every discussion and report."
-            },
-            "warehouse": {
-                tag: "Warehouse operations",
-                title: "Complex picking and returns",
-                image: "https://images.unsplash.com/photo-1545243424-0ce743321e11?auto=format&fit=crop&w=900&q=80",
-                before: "Slow movers consume cold space and create handling work.",
-                action: "ABC-XYZ storage logic and better layouts integrated in GISC.",
-                after: "Faster operations and less waste or rework."
-            }
-        };
+    "demand": {
+        tag: "Demand Planning",
+        title: "No unified forecast",
+        image: "https://via.placeholder.com/900x600.png?text=Demand+Planning",
+        before: "Each region orders based on experience, causing mismatches and spikes.",
+        action: "AI forecasting + unified S&OP cycle with one truth.",
+        after: "Aligned demand signals and fewer emergency shipments."
+    },
+    "inventory": {
+        tag: "Inventory Management",
+        title: "Excess stock in slow movers",
+        image: "https://via.placeholder.com/900x600.png?text=Inventory+Issues",
+        before: "High coverage in C-class SKUs and lack of SKU lifecycle clarity.",
+        action: "ABC/XYZ optimization and dynamic safety stock rules.",
+        after: "Lower working capital and smarter warehouse space usage."
+    },
+    "visibility": {
+        tag: "End-to-End Visibility",
+        title: "Blind spots in freight & cold chain",
+        image: "https://via.placeholder.com/900x600.png?text=E2E+Visibility",
+        before: "Status only visible when someone sends an email update.",
+        action: "GPS + temperature IoT sensors connected to dashboards.",
+        after: "Real-time tracking, fewer delays, better customer reliability."
+    },
+    "manual": {
+        tag: "Manual Processes",
+        title: "Too many emails & spreadsheets",
+        image: "https://via.placeholder.com/900x600.png?text=Manual+Processes",
+        before: "Approvals, orders, and bookings handled manually.",
+        action: "Automated workflows and role-based screens in GISC.",
+        after: "Fewer errors, faster processes, and less admin workload."
+    },
+    "data": {
+        tag: "Data Reliability",
+        title: "ERP and WMS do not match",
+        image: "https://via.placeholder.com/900x600.png?text=Data+Reliability",
+        before: "Different numbers in each system, causing disputes.",
+        action: "Master data governance + real-time integration.",
+        after: "Consistent numbers and a single source of truth."
+    },
+    "warehouse": {
+        tag: "Warehouse Operations",
+        title: "Complex structure, slow picking",
+        image: "https://via.placeholder.com/900x600.png?text=Warehouse+Operations",
+        before: "Slow movers congest cold-room areas and picking flows.",
+        action: "Slotting optimization & better layouts powered by analytics.",
+        after: "Faster operations with lower errors and less rework."
+    }
+};
 
         function clearProblemChips() {
             document.querySelectorAll('.problem-chip').forEach(chip => {
@@ -1213,3 +1213,4 @@
     </script>
 </body>
 </html>
+
