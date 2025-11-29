@@ -24,7 +24,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Map Dots */
         .map-dot {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -34,13 +33,12 @@
             z-index: 20;
         }
         .map-dot.active {
-            background-color: #ef4444; /* Red-500 */
+            background-color: #ef4444;
             border-color: white;
             transform: scale(1.3);
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
         }
 
-        /* Chips & Pills */
         .tag-pill {
             font-size: 0.65rem;
             text-transform: uppercase;
@@ -48,9 +46,8 @@
             font-weight: 700;
         }
 
-        /* Active States with Colors */
         .problem-chip-active {
-            border-color: #3b82f6; /* Blue-500 */
+            border-color: #3b82f6;
             background: linear-gradient(to right, #eff6ff, white);
             box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.2);
             transform: translateY(-2px);
@@ -63,15 +60,13 @@
             box-shadow: 0 15px 30px -15px rgba(37,99,235,0.3);
         }
 
-        /* Chain steps */
         .chain-step-active {
-            border-color: #0ea5e9; /* Sky-500 */
+            border-color: #0ea5e9;
             background: linear-gradient(to right, #f0f9ff, white);
             box-shadow: 0 10px 25px -10px rgba(14, 165, 233, 0.3);
             transform: translateX(6px);
         }
 
-        /* GISC dots */
         .gisc-dot {
             transition: all 0.3s ease;
         }
@@ -81,13 +76,12 @@
             z-index: 20;
         }
         .gisc-dot-active {
-            background-color: #10b981; /* Emerald-500 */
+            background-color: #10b981;
             border-color: #ecfdf5;
             transform: scale(1.3);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
         }
 
-        /* Sidebar Nav Active */
         .nav-btn.active {
             background: linear-gradient(90deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
             border-left: 3px solid #3b82f6;
@@ -178,6 +172,7 @@
 
         <div class="px-4 py-6 md:p-8 max-w-7xl mx-auto w-full flex-1">
 
+            <!-- INTRO / COMPANY -->
             <section id="intro" class="section-content block fade-in">
                 <div class="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
                     <div class="bg-white p-4 md:p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-200 transition group">
@@ -216,7 +211,7 @@
                 </div>
 
                 <div class="relative rounded-2xl overflow-hidden shadow-xl h-64 md:h-[380px] group border border-slate-200">
-                    <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=2100&q=80" alt="Frozen warehouse" class="absolute w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1600&q=80" alt="Frozen warehouse" class="absolute w-full h-full object-cover transition duration-1000 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent flex items-end p-4 md:p-8">
                         <div class="max-w-xl text-white">
                             <span class="bg-blue-600 text-[10px] md:text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block shadow-lg">Frozen-food distributor</span>
@@ -232,6 +227,7 @@
                 </div>
             </section>
 
+            <!-- CONTEXT / NETWORK -->
             <section id="context" class="section-content hidden fade-in">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:h-[550px]">
                     <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
@@ -266,7 +262,7 @@
                     </div>
 
                     <div class="lg:col-span-2 bg-slate-900 rounded-2xl relative shadow-2xl overflow-hidden border border-slate-800 min-h-[260px]">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80"
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80"
                              class="w-full h-full object-cover opacity-50 grayscale contrast-125" alt="World Map">
                         
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/80"></div>
@@ -297,17 +293,12 @@
                             <span class="absolute top-0 left-0 w-full h-full bg-blue-400 rounded-full animate-ping opacity-70"></span>
                         </button>
 
-                        <div class="absolute bottom-4 md:bottom-6 left-4 md:left-6 bg-slate-900/80 backdrop-blur-md text-white p-3 md:p-4 rounded-xl text-[10px] md:text-xs max-w-xs border border-slate-700 shadow-xl">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-                                <p class="font-bold">Key Insight</p>
-                            </div>
-                            <p class="opacity-80 leading-relaxed">Long, complex and cold-chain sensitive flows. Perfect playground for better planning and visibility.</p>
-                        </div>
+                        <!-- Key Insight card removed to avoid covering dots -->
                     </div>
                 </div>
             </section>
 
+            <!-- PROBLEM / PAIN POINTS -->
             <section id="problem" class="section-content hidden fade-in">
                 <div class="text-center max-w-2xl mx-auto mb-8">
                     <span class="tag-pill text-red-500 font-bold bg-red-50 px-2 py-1 rounded-full border border-red-100">Step 1 · Pain points</span>
@@ -393,7 +384,7 @@
 
                 <div id="problem-detail" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6 grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
                     <div class="md:col-span-2 relative h-52 rounded-xl overflow-hidden shadow-inner bg-slate-100">
-                        <img id="problem-image" src="https://images.unsplash.com/photo-1543286386-2f6595e9649b?auto=format&fit=crop&w=900&q=80"
+                        <img loading="lazy" id="problem-image" src="https://images.unsplash.com/photo-1543286386-2f6595e9649b?auto=format&fit=crop&w=900&q=80"
                              class="w-full h-full object-cover transition-all duration-500" alt="Problem visual">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white text-xs">
@@ -446,6 +437,7 @@
                 </div>
             </section>
 
+            <!-- INITIATIVES -->
             <section id="initiatives" class="section-content hidden fade-in">
                 <div class="mb-6 md:mb-8">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 2 · First ideas</span>
@@ -516,7 +508,7 @@
                         <div class="bg-slate-900 rounded-[2.5rem] p-4 w-64 sm:w-72 h-[380px] sm:h-[450px] relative shadow-2xl border-4 border-slate-800">
                             <div class="absolute inset-x-16 -top-1 h-6 bg-slate-800 rounded-b-3xl z-20"></div>
                             <div class="bg-black rounded-[2rem] w-full h-full overflow-hidden relative">
-                                <img id="initiative-image"
+                                <img loading="lazy" id="initiative-image"
                                      src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80"
                                      class="w-full h-full object-cover opacity-80" alt="Initiative preview">
                                 <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
@@ -550,6 +542,7 @@
                 </div>
             </section>
 
+            <!-- SUPPLY CHAIN -->
             <section id="supply-chain" class="section-content hidden fade-in">
                 <div class="mb-6">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 3 · Chain view</span>
@@ -616,7 +609,7 @@
 
                     <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-5 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
                         <div class="relative rounded-2xl overflow-hidden h-52 md:h-full shadow-inner">
-                            <img id="chain-image"
+                            <img loading="lazy" id="chain-image"
                                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
                                  class="w-full h-full object-cover" alt="Chain step">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
@@ -672,6 +665,7 @@
                 </div>
             </section>
 
+            <!-- GISC / FINAL SOLUTION -->
             <section id="initiative" class="section-content hidden fade-in">
                 <div class="mb-6">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 4 · Final solution</span>
@@ -683,7 +677,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-8">
                     <div class="lg:col-span-2 bg-slate-900 rounded-2xl p-5 md:p-6 relative overflow-hidden border border-slate-800 shadow-2xl">
-                        <img id="gisc-image"
+                        <img loading="lazy" id="gisc-image"
                              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
                              class="w-full h-full object-cover absolute inset-0 opacity-40 mix-blend-luminosity" alt="GISC dashboard">
                         <div class="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/50 to-slate-900/90"></div>
@@ -879,7 +873,6 @@
             }
         }
 
-        // MAP INFO
         const mapData = {
             "usa": {
                 title: "North America hub",
@@ -945,7 +938,6 @@
             lucide.createIcons();
         }
 
-        // PAIN POINT VISUALS
         const problemData = {
             "demand": {
                 tag: "Demand planning",
@@ -1018,7 +1010,6 @@
             document.getElementById('after-text').innerText = data.after;
         }
 
-        // INITIATIVES VISUAL
         const initiativeData = {
             "ai": {
                 image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80",
@@ -1061,7 +1052,6 @@
             document.getElementById('initiative-tag3').innerText = d.tags[2];
         }
 
-        // CHAIN STEPS
         const chainSteps = {
             "suppliers": {
                 label: "Step 1 · Suppliers",
@@ -1075,7 +1065,7 @@
             "ocean": {
                 label: "Step 2 · Ocean freight",
                 title: "Containers on the ocean",
-                image: "https://images.unsplash.com/photo-1524522173746-f628baad3644?auto=format&fit=crop&w=1000&q=80",
+                image: "https://images.unsplash.com/photo-1524522173746-f628baad3644?auto=format&fit=crop&w=900&q=80",
                 flow: "Containers travel weeks with limited live tracking.",
                 pain: "Blind spots in route and temperature, hard to react to issues.",
                 fix: "IoT sensors and events send GPS and temperature into GISC dashboards.",
@@ -1132,7 +1122,6 @@
             chip3.classList.toggle('hidden', !s.chips[2]);
         }
 
-        // GISC PILLARS
         const giscPillars = {
             "planning": {
                 pill: "AI Planning",
@@ -1201,7 +1190,6 @@
             }
         }
 
-        // Utils
         function toggleNotification() {
             const el = document.getElementById('notification-modal');
             el.classList.toggle('active');
@@ -1211,7 +1199,6 @@
             alert("In a real app this would export the storyline as a PDF or PowerPoint.");
         }
 
-        // Init defaults
         selectInitiative('ai');
 
         window.addEventListener('load', () => {
