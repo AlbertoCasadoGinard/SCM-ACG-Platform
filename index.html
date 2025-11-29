@@ -172,7 +172,7 @@
 
         <div class="px-4 py-6 md:p-8 max-w-7xl mx-auto w-full flex-1">
 
-            <!-- INTRO / COMPANY -->
+            <!-- INTRO -->
             <section id="intro" class="section-content block fade-in">
                 <div class="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
                     <div class="bg-white p-4 md:p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-200 transition group">
@@ -227,7 +227,7 @@
                 </div>
             </section>
 
-            <!-- CONTEXT / NETWORK -->
+            <!-- CONTEXT -->
             <section id="context" class="section-content hidden fade-in">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:h-[550px]">
                     <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
@@ -292,13 +292,11 @@
                             </span>
                             <span class="absolute top-0 left-0 w-full h-full bg-blue-400 rounded-full animate-ping opacity-70"></span>
                         </button>
-
-                        <!-- Key Insight card removed to avoid covering dots -->
                     </div>
                 </div>
             </section>
 
-            <!-- PROBLEM / PAIN POINTS -->
+            <!-- PROBLEM / 6 CORE PROBLEMS -->
             <section id="problem" class="section-content hidden fade-in">
                 <div class="text-center max-w-2xl mx-auto mb-8">
                     <span class="tag-pill text-red-500 font-bold bg-red-50 px-2 py-1 rounded-full border border-red-100">Step 1 · Pain points</span>
@@ -665,7 +663,7 @@
                 </div>
             </section>
 
-            <!-- GISC / FINAL SOLUTION -->
+            <!-- GISC -->
             <section id="initiative" class="section-content hidden fade-in">
                 <div class="mb-6">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 4 · Final solution</span>
@@ -938,11 +936,12 @@
             lucide.createIcons();
         }
 
+        /* UPDATED IMAGES FOR PROBLEM CARDS */
         const problemData = {
             "demand": {
                 tag: "Demand planning",
                 title: "No unified forecast",
-                image: "https://images.unsplash.com/photo-1543286386-2f6595e9649b?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
                 before: "Each unit orders based on experience. Little long-term view.",
                 action: "AI forecasting + one Sales and Operations Planning cycle.",
                 after: "Earlier, aligned orders and less rush shipments."
@@ -950,7 +949,7 @@
             "inventory": {
                 tag: "Inventory",
                 title: "Too much of the wrong stock",
-                image: "https://images.unsplash.com/photo-1566576912906-253c7235555d?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1586521995568-39b00c97d335?auto=format&fit=crop&w=900&q=80",
                 before: "C-class products with very long coverage and low rotation.",
                 action: "ABC-XYZ matrix decides what to keep, reduce or make on demand.",
                 after: "Lower working capital and simpler warehouse flows."
@@ -958,7 +957,7 @@
             "visibility": {
                 tag: "End-to-end visibility",
                 title: "Blind spots in containers and cold-chain",
-                image: "https://images.unsplash.com/photo-1516937941348-c09e55412a3d?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1517898717281-8e4385a4a56b?auto=format&fit=crop&w=900&q=80",
                 before: "Status only by email or phone with forwarders and warehouses.",
                 action: "IoT sensors send temperature and GPS data into dashboards.",
                 after: "Fewer quality incidents and clear proof of cold-chain."
@@ -966,7 +965,7 @@
             "manual": {
                 tag: "Manual work",
                 title: "Too many emails and spreadsheets",
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
                 before: "Planners spend hours copying and reconciling files.",
                 action: "Digital workflows and role-based screens in GISC.",
                 after: "People spend more time on decisions and less on admin."
@@ -974,7 +973,7 @@
             "data": {
                 tag: "Data",
                 title: "Different numbers everywhere",
-                image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=900&q=80",
                 before: "ERP, warehouse system and Excel do not match.",
                 action: "One master data model and standard key performance indicators.",
                 after: "“One truth” for every discussion and report."
@@ -982,7 +981,7 @@
             "warehouse": {
                 tag: "Warehouse operations",
                 title: "Complex picking and returns",
-                image: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1545243424-0ce743321e11?auto=format&fit=crop&w=900&q=80",
                 before: "Slow movers consume cold space and create handling work.",
                 action: "ABC-XYZ storage logic and better layouts integrated in GISC.",
                 after: "Faster operations and less waste or rework."
@@ -1010,15 +1009,16 @@
             document.getElementById('after-text').innerText = data.after;
         }
 
+        /* UPDATED IMAGES FOR INITIATIVES */
         const initiativeData = {
             "ai": {
-                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?auto=format&fit=crop&w=900&q=80",
                 chip: "Planner view · AI",
                 title: "AI forecast vs. historical sales per region.",
                 tags: ["Less stock-outs", "Earlier ordering", "One common plan"]
             },
             "sku": {
-                image: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1519751138087-5a1f039f83a0?auto=format&fit=crop&w=900&q=80",
                 chip: "ABC–XYZ matrix",
                 title: "Grid of products by value and variability.",
                 tags: ["Focus on A-X", "Shrink long tail", "Free cold-space"]
@@ -1052,6 +1052,7 @@
             document.getElementById('initiative-tag3').innerText = d.tags[2];
         }
 
+        /* UPDATED IMAGES FOR CHAIN */
         const chainSteps = {
             "suppliers": {
                 label: "Step 1 · Suppliers",
@@ -1065,7 +1066,7 @@
             "ocean": {
                 label: "Step 2 · Ocean freight",
                 title: "Containers on the ocean",
-                image: "https://images.unsplash.com/photo-1524522173746-f628baad3644?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1523287562758-66c7fc58967a?auto=format&fit=crop&w=900&q=80",
                 flow: "Containers travel weeks with limited live tracking.",
                 pain: "Blind spots in route and temperature, hard to react to issues.",
                 fix: "IoT sensors and events send GPS and temperature into GISC dashboards.",
@@ -1083,7 +1084,7 @@
             "customers": {
                 label: "Step 4 · Customers",
                 title: "Restaurants & retailers",
-                image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80",
                 flow: "Deliveries to 2,700+ business customers with limited status visibility.",
                 pain: "Customer service handles many status calls and returns.",
                 fix: "GISC offers a simple status and cold-chain proof view per order.",
@@ -1122,6 +1123,7 @@
             chip3.classList.toggle('hidden', !s.chips[2]);
         }
 
+        /* UPDATED IMAGES FOR GISC PILLARS */
         const giscPillars = {
             "planning": {
                 pill: "AI Planning",
@@ -1143,7 +1145,7 @@
                 kpi1: "-20–25%",
                 kpi2: "Better rotation",
                 kpi3: "Fewer write-offs",
-                image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80"
+                image: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1200&q=80"
             },
             "visibility": {
                 pill: "End-to-end visibility",
@@ -1154,7 +1156,7 @@
                 kpi1: "98% cold-chain",
                 kpi2: "Lower returns",
                 kpi3: "Happier customers",
-                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
+                image: "https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&w=1200&q=80"
             }
         };
 
