@@ -172,7 +172,6 @@
 
         <div class="px-4 py-6 md:p-8 max-w-7xl mx-auto w-full flex-1">
 
-            <!-- INTRO -->
             <section id="intro" class="section-content block fade-in">
                 <div class="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
                     <div class="bg-white p-4 md:p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-200 transition group">
@@ -211,7 +210,7 @@
                 </div>
 
                 <div class="relative rounded-2xl overflow-hidden shadow-xl h-64 md:h-[380px] group border border-slate-200">
-                    <img loading="lazy" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1600&q=80" alt="Frozen warehouse" class="absolute w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80" alt="Frozen warehouse" class="absolute w-full h-full object-cover transition duration-1000 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent flex items-end p-4 md:p-8">
                         <div class="max-w-xl text-white">
                             <span class="bg-blue-600 text-[10px] md:text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block shadow-lg">Frozen-food distributor</span>
@@ -219,6 +218,7 @@
                             <p class="text-slate-200 text-xs md:text-sm mb-5 leading-relaxed font-light">
                                 Our network is expanding, but our planning is still manual. We need to bridge the gap between demand and supply.
                             </p>
+
                             <button onclick="navigate('context')" class="bg-white text-slate-900 hover:bg-slate-50 px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-bold flex items-center gap-2 transition text-xs md:text-sm shadow-lg">
                                 Go to network <i data-lucide="chevron-right" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </button>
@@ -227,7 +227,6 @@
                 </div>
             </section>
 
-            <!-- CONTEXT -->
             <section id="context" class="section-content hidden fade-in">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:h-[550px]">
                     <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
@@ -264,7 +263,7 @@
                     <div class="lg:col-span-2 bg-slate-900 rounded-2xl relative shadow-2xl overflow-hidden border border-slate-800 min-h-[260px]">
                         <img loading="lazy" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80"
                              class="w-full h-full object-cover opacity-50 grayscale contrast-125" alt="World Map">
-                        
+                         
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/80"></div>
 
                         <button onclick="showMapInfo('usa', this)" class="map-dot absolute top-[35%] left-[24%] w-5 h-5 bg-blue-500 rounded-full border-2 border-white cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)] group">
@@ -296,7 +295,6 @@
                 </div>
             </section>
 
-            <!-- PROBLEM / 6 CORE PROBLEMS -->
             <section id="problem" class="section-content hidden fade-in">
                 <div class="text-center max-w-2xl mx-auto mb-8">
                     <span class="tag-pill text-red-500 font-bold bg-red-50 px-2 py-1 rounded-full border border-red-100">Step 1 · Pain points</span>
@@ -382,11 +380,8 @@
 
                 <div id="problem-detail" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6 grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
                     <div class="md:col-span-2 relative h-52 rounded-xl overflow-hidden shadow-inner bg-slate-100">
-                        <!-- DEFAULT IMAGE UPDATED + ALT TEXT CHANGED -->
-                        <img loading="lazy" id="problem-image"
-                             src="https://via.placeholder.com/900x600.png?text=Select+a+pain+point"
-                             class="w-full h-full object-cover transition-all duration-500"
-                             alt="Pain point illustration">
+                        <img loading="lazy" id="problem-image" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80"
+                             class="w-full h-full object-cover transition-all duration-500" alt="Problem visual">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white text-xs">
                             <p class="tag-pill text-slate-300 mb-1" id="problem-tag">Choose a pain point</p>
@@ -438,7 +433,6 @@
                 </div>
             </section>
 
-            <!-- INITIATIVES -->
             <section id="initiatives" class="section-content hidden fade-in">
                 <div class="mb-6 md:mb-8">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 2 · First ideas</span>
@@ -510,7 +504,7 @@
                             <div class="absolute inset-x-16 -top-1 h-6 bg-slate-800 rounded-b-3xl z-20"></div>
                             <div class="bg-black rounded-[2rem] w-full h-full overflow-hidden relative">
                                 <img loading="lazy" id="initiative-image"
-                                     src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80"
+                                     src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=80"
                                      class="w-full h-full object-cover opacity-80" alt="Initiative preview">
                                 <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
 
@@ -543,7 +537,6 @@
                 </div>
             </section>
 
-            <!-- SUPPLY CHAIN -->
             <section id="supply-chain" class="section-content hidden fade-in">
                 <div class="mb-6">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 3 · Chain view</span>
@@ -611,7 +604,7 @@
                     <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-5 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
                         <div class="relative rounded-2xl overflow-hidden h-52 md:h-full shadow-inner">
                             <img loading="lazy" id="chain-image"
-                                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
+                                 src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80"
                                  class="w-full h-full object-cover" alt="Chain step">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
                             <div class="absolute bottom-5 left-5 text-white z-10">
@@ -666,7 +659,6 @@
                 </div>
             </section>
 
-            <!-- GISC -->
             <section id="initiative" class="section-content hidden fade-in">
                 <div class="mb-6">
                     <span class="tag-pill text-blue-500 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-100">Step 4 · Final solution</span>
@@ -939,12 +931,12 @@
             lucide.createIcons();
         }
 
-        /* UPDATED IMAGES FOR PROBLEM CARDS */
+        /* UPDATED IMAGES FOR PROBLEM CARDS - FIXED UNSPLASH LINKS */
         const problemData = {
             "demand": {
                 tag: "Demand planning",
                 title: "No unified forecast",
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
                 before: "Each unit orders based on experience. Little long-term view.",
                 action: "AI forecasting + one Sales and Operations Planning cycle.",
                 after: "Earlier, aligned orders and less rush shipments."
@@ -952,7 +944,7 @@
             "inventory": {
                 tag: "Inventory",
                 title: "Too much of the wrong stock",
-                image: "https://images.unsplash.com/photo-1586521995568-39b00c97d335?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80",
                 before: "C-class products with very long coverage and low rotation.",
                 action: "ABC-XYZ matrix decides what to keep, reduce or make on demand.",
                 after: "Lower working capital and simpler warehouse flows."
@@ -960,7 +952,7 @@
             "visibility": {
                 tag: "End-to-end visibility",
                 title: "Blind spots in containers and cold-chain",
-                image: "https://images.unsplash.com/photo-1517898717281-8e4385a4a56b?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1494412651409-4963d42557ac?auto=format&fit=crop&w=900&q=80",
                 before: "Status only by email or phone with forwarders and warehouses.",
                 action: "IoT sensors send temperature and GPS data into dashboards.",
                 after: "Fewer quality incidents and clear proof of cold-chain."
@@ -968,7 +960,7 @@
             "manual": {
                 tag: "Manual work",
                 title: "Too many emails and spreadsheets",
-                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=80",
                 before: "Planners spend hours copying and reconciling files.",
                 action: "Digital workflows and role-based screens in GISC.",
                 after: "People spend more time on decisions and less on admin."
@@ -976,7 +968,7 @@
             "data": {
                 tag: "Data",
                 title: "Different numbers everywhere",
-                image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
                 before: "ERP, warehouse system and Excel do not match.",
                 action: "One master data model and standard key performance indicators.",
                 after: "“One truth” for every discussion and report."
@@ -984,7 +976,7 @@
             "warehouse": {
                 tag: "Warehouse operations",
                 title: "Complex picking and returns",
-                image: "https://images.unsplash.com/photo-1545243424-0ce743321e11?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1565891741441-64926e441838?auto=format&fit=crop&w=900&q=80",
                 before: "Slow movers consume cold space and create handling work.",
                 action: "ABC-XYZ storage logic and better layouts integrated in GISC.",
                 after: "Faster operations and less waste or rework."
@@ -1015,19 +1007,19 @@
         /* UPDATED IMAGES FOR INITIATIVES */
         const initiativeData = {
             "ai": {
-                image: "https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=80",
                 chip: "Planner view · AI",
                 title: "AI forecast vs. historical sales per region.",
                 tags: ["Less stock-outs", "Earlier ordering", "One common plan"]
             },
             "sku": {
-                image: "https://images.unsplash.com/photo-1519751138087-5a1f039f83a0?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&w=900&q=80",
                 chip: "ABC–XYZ matrix",
                 title: "Grid of products by value and variability.",
                 tags: ["Focus on A-X", "Shrink long tail", "Free cold-space"]
             },
             "iot": {
-                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=900&q=80",
                 chip: "Cold-chain view",
                 title: "Live temperature and GPS per container.",
                 tags: ["Cold-chain proof", "Fewer returns", "Better ETAs"]
@@ -1060,7 +1052,7 @@
             "suppliers": {
                 label: "Step 1 · Suppliers",
                 title: "Suppliers & sourcing",
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80",
                 flow: "Purchase orders sent in a reactive way, based on short-term view.",
                 pain: "Suppliers receive late and fragmented signals; capacity and prices suffer.",
                 fix: "GISC shares one AI-based plan with suppliers, stabilising volumes and improving prices.",
@@ -1069,7 +1061,7 @@
             "ocean": {
                 label: "Step 2 · Ocean freight",
                 title: "Containers on the ocean",
-                image: "https://images.unsplash.com/photo-1523287562758-66c7fc58967a?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1494412651409-4963d42557ac?auto=format&fit=crop&w=900&q=80",
                 flow: "Containers travel weeks with limited live tracking.",
                 pain: "Blind spots in route and temperature, hard to react to issues.",
                 fix: "IoT sensors and events send GPS and temperature into GISC dashboards.",
@@ -1078,7 +1070,7 @@
             "warehouse": {
                 label: "Step 3 · Warehouses",
                 title: "Cold warehouses & stock",
-                image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=900&q=80",
                 flow: "9 warehouses with a long tail of slow-moving products.",
                 pain: "Cold space and energy used by low-value SKUs.",
                 fix: "ABC–XYZ rules from GISC guide what to stock and where.",
@@ -1087,7 +1079,7 @@
             "customers": {
                 label: "Step 4 · Customers",
                 title: "Restaurants & retailers",
-                image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80",
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=900&q=80",
                 flow: "Deliveries to 2,700+ business customers with limited status visibility.",
                 pain: "Customer service handles many status calls and returns.",
                 fix: "GISC offers a simple status and cold-chain proof view per order.",
@@ -1148,7 +1140,7 @@
                 kpi1: "-20–25%",
                 kpi2: "Better rotation",
                 kpi3: "Fewer write-offs",
-                image: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1200&q=80"
+                image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80"
             },
             "visibility": {
                 pill: "End-to-end visibility",
@@ -1159,7 +1151,7 @@
                 kpi1: "98% cold-chain",
                 kpi2: "Lower returns",
                 kpi3: "Happier customers",
-                image: "https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&w=1200&q=80"
+                image: "https://images.unsplash.com/photo-1494412651409-4963d42557ac?auto=format&fit=crop&w=1200&q=80"
             }
         };
 
